@@ -6,6 +6,15 @@
   <title>QuickFixBots | Fast. Reliable. Done.</title>
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2563eb">
+
+  <!-- iOS Support -->
+  <link rel="apple-touch-icon" href="assets/logo.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
   <!-- SEO meta tags -->
   <meta name="description" content="QuickFixBots offers fast, reliable, and professional handyman services.">
   <meta name="keywords" content="handyman serices, home repair, quick fix, QuickFixBots, repair services, home maintenance, solar panel, installations">	
@@ -237,5 +246,14 @@
   </div>
 
 </footer>
+
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("/service-worker.js")
+      .then(() => console.log("Service Worker Registered"));
+  }
+</script>
+
 </body>
 </html>
