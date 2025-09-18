@@ -1,59 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QuickFixBots | Fast. Reliable. Done.</title>
+
+  <!-- Tailwind CDN (kept for now) -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-   
-      <!-- Logo + Brand Name -->
-      <div class="flex-shrink-0 flex items-center">
-        <img src="assets/logo.png" alt="QuickFixBots Logo" class="h-10 w-auto mr-2">
-        <span class="text-xl font-bold text-gray-800">QuickFixBots</span>
-      </div>
-
-      <!-- Navigation -->
-      <div class="hidden md:flex space-x-6 items-center">
-        <a href="#services" class="text-gray-700 hover:text-blue-600">Services</a>
-        <a href="#about" class="text-gray-700 hover:text-blue-600">About</a>
-        <a href="#contact" class="text-gray-700 hover:text-blue-600">Contact</a>
-        <a href="#book" class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
-          Book a Service
-        </a>
-      </div>
-
-      <!-- Mobile Menu Button -->
-      <div class="md:hidden">
-        <button id="menu-btn" class="focus:outline-none">
-          <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-              d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="hidden md:hidden px-4 pb-4 space-y-2">
-    <a href="#services" class="block text-gray-700 hover:text-blue-600">Services</a>
-    <a href="#about" class="block text-gray-700 hover:text-blue-600">About</a>
-    <a href="#contact" class="block text-gray-700 hover:text-blue-600">Contact</a>
-    <a href="#book" class="block bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
-      Book a Service
-    </a>
-  </div>
-</header>
-
-<script>
-  // Mobile menu toggle
-  document.getElementById("menu-btn").addEventListener("click", function() {
-    const menu = document.getElementById("mobile-menu");
-    menu.classList.toggle("hidden");
-  });
-</script>
-
 
   <!-- PWA Manifest -->
   <link rel="manifest" href="manifest.json">
@@ -99,14 +52,15 @@
 
 </head>
 <body class="font-sans text-gray-800">
- <header class="bg-white shadow fixed w-full z-50">
-  <div class="container mx-auto flex items-center justify-between px-4 py-3 md:py-4">
-    
-    <!-- Logo + Brand -->
-    <div class="flex items-center space-x-3">
-      <img src="assets/logo.png" alt="QuickFixBots Logo" class="h-12 w-auto">
-      <span class="text-2xl font-bold text-blue-700">Quick<span class="text-orange-500">Fix</span>Bots</span>
-    </div>
+
+  <!-- ===== Header (only one header here) ===== -->
+  <header class="bg-white shadow fixed w-full z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 md:py-4">
+      <!-- Logo + Brand -->
+      <div class="flex items-center space-x-3">
+        <img src="assets/logo.png" alt="QuickFixBots Logo" class="h-12 w-auto" />
+        <span class="text-2xl font-bold text-blue-700">Quick<span class="text-orange-500">Fix</span>Bots</span>
+      </div>
 
     <!-- Desktop Navigation -->
     <nav class="hidden md:flex space-x-6 items-center font-medium text-lg">
@@ -138,18 +92,24 @@
   </div>
 </header>
 
-<script>
-  // Mobile menu toggle
-  document.getElementById("menu-btn").addEventListener("click", function () {
-    document.getElementById("mobile-menu").classList.toggle("hidden");
-  });
-</script>
-
+  <script>
+    // Toggle mobile menu
+    document.addEventListener("DOMContentLoaded", function(){
+      const btn = document.getElementById("menu-btn");
+      const menu = document.getElementById("mobile-menu");
+      if (btn) {
+        btn.addEventListener("click", function () {
+          menu.classList.toggle("hidden");
+        });
+      }
+    });
+  </script>
 
   <!-- Hero Section -->
+<main class="pt-28"> <!-- add top padding so content doesn't hide under fixed header -->
   <section class="bg-gradient-to-r from-blue-50 to-blue-100 pt-40 pb-24 text-center">
-    <div class="max-w-3xl mx-auto">
-      <h1 class="text-5xl md:text-6xl font-extrabold text-blue-800 leading-tight">
+    <div class="max-w-3xl mx-auto px-6">
+      <h1 class="text-5xl md:text-6xl font-extrabold text-blue-800 leading-tight mt-8">
         Fast. Reliable. Done.
       </h1>
       <p class="mt-6 text-xl md:text-2xl text-gray-700">
@@ -316,7 +276,6 @@
   </div>
 
 </footer>
-
 <script>
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker
