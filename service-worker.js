@@ -1,18 +1,49 @@
 // service-worker.js
 
-// Ensure immediate activation
+const CACHE_NAME = "quickfixbots-v1";
+const ASSETS_TO_CACHE = [
+  "/assets/logo.png",
+  "/assets/icon-192.png",
+  "/assets/icon-512.png",
+  "/manifest.json"
+];
+
+// Install: cache only static assets (NOT index.html)
 self.addEventListener("install", (event) => {
-  self.skipWaiting(); // Activate immediately
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(ASSETS_TO_CACHE);
+    })
+  );
+  self.skipWaiting();
 });
 
-// Take control of open pages
+// Activate: clear old caches
 self.addEventListener("activate", (event) => {
-  event.waitUntil(clients.claim());
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)))
+    )
+  );
+  clients.claim();
 });
 
-// Always fetch from network (no caching for HTML)
+// Fetch: 
+// - Always fetch HTML/documents from network (so updates are instant).
+// - For images/icons, try cache first, then network fallback.
 self.addEventListener("fetch", (event) => {
   if (event.request.mode === "navigate" || event.request.destination === "document") {
-    event.respondWith(fetch(event.request));
+    event.respondWith(fetch(event.request)); // Always fresh HTML
+  } else if (event.request.destination === "image" || event.request.destination === "script" || event.request.destination === "style") {
+    event.respondWith(
+      caches.match(event.request).then((cached) => {
+        return cached || fetch(event.request).then((response) => {
+          return caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, response.clone());
+            return response;
+          });
+        });
+      })
+    );
   }
 });
