@@ -1,19 +1,18 @@
-self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open("quickfixbots-cache").then(cache => {
-      return cache.addAll([
-        "/",
-        "/index.html",
-        "/assets/logo.png"
-      ]);
-    })
-  );
+// service-worker.js
+
+// Ensure immediate activation
+self.addEventListener("install", (event) => {
+  self.skipWaiting(); // Activate immediately
 });
 
-self.addEventListener("fetch", event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
-  );
+// Take control of open pages
+self.addEventListener("activate", (event) => {
+  event.waitUntil(clients.claim());
+});
+
+// Always fetch from network (no caching for HTML)
+self.addEventListener("fetch", (event) => {
+  if (event.request.mode === "navigate" || event.request.destination === "document") {
+    event.respondWith(fetch(event.request));
+  }
 });
