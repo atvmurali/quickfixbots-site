@@ -351,5 +351,48 @@
   </svg>
 </a>
 
+<!-- PWA Install Prompt -->
+<script>
+  let deferredPrompt;
+  const installBtn = document.createElement("button");
+
+  // Button styles
+  installBtn.textContent = "📱 Install QuickFixBots";
+  installBtn.style.position = "fixed";
+  installBtn.style.bottom = "80px";
+  installBtn.style.right = "10px";
+  installBtn.style.background = "#2563eb"; /* blue */
+  installBtn.style.color = "white";
+  installBtn.style.border = "none";
+  installBtn.style.borderRadius = "6px";
+  installBtn.style.padding = "10px 16px";
+  installBtn.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.2)";
+  installBtn.style.fontSize = "14px";
+  installBtn.style.cursor = "pointer";
+  installBtn.style.display = "none"; /* hidden initially */
+  installBtn.style.zIndex = "9999";
+  document.body.appendChild(installBtn);
+
+  // Capture beforeinstallprompt event
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = "block";
+  });
+
+  // Handle click on button
+  installBtn.addEventListener("click", async () => {
+    installBtn.style.display = "none";
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  });
+
+  // Hide the button once installed
+  window.addEventListener("appinstalled", () => {
+    installBtn.style.display = "none";
+  });
+</script>
+
 </body>
 </html>
