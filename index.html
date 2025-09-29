@@ -49,18 +49,16 @@
   </script>
 
 <style>
-  /* Fix scroll offset so sections don't hide under sticky header */
+  /* Fix scroll offset for sticky header */
   section {
-    scroll-margin-top: 72px; /* tuned for desktop header */
+    scroll-margin-top: 80px;
   }
-
   html {
-    scroll-behavior: smooth; /* smooth scrolling */
+    scroll-behavior: smooth;
   }
-
   @media (max-width: 768px) {
     section {
-      scroll-margin-top: 96px; /* tuned for mobile header */
+      scroll-margin-top: 100px;
     }
   }
 </style>
